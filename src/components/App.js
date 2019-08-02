@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./App.css";
 
 import Navbar from "./Navbar/Navbar";
@@ -9,6 +9,7 @@ import MainContentGrid from "./MainContentGrid/MainContentGrid";
 import AddNewHome from "./AddNewHome/AddNewHome";
 import HomeCard from "./HomeCard/HomeCard";
 import AddNewRoom from "./AddNewRoom/AddNewRoom";
+import Room from "./Room/Room";
 
 class App extends Component {
   constructor(props) {
@@ -89,7 +90,8 @@ class App extends Component {
     let home = this.state.homes;
     home[0].rooms.push(newRoom);
     this.setState({
-      home
+      home,
+      newRoomName: ""
     });
   };
 
@@ -121,17 +123,30 @@ class App extends Component {
               />
               {this.state.homes.map((home, key) => {
                 return (
-                  <HomeCard
-                    key={key}
-                    id={home.id}
-                    name={home.name}
-                    status={home.status}
-                    appliances={home.appliances}
-                    rooms={home.rooms}
-                    deletHome={this._deleteHome}
-                    addRooms={this._addRooms}
-                    addRoomVisisble={this.state.addNewRoomVisible}
-                  />
+                  <Fragment key={key}>
+                    <HomeCard
+                      key={key}
+                      id={home.id}
+                      name={home.name}
+                      status={home.status}
+                      appliances={home.appliances}
+                      rooms={home.rooms}
+                      deletHome={this._deleteHome}
+                      addRooms={this._addRooms}
+                      addRoomVisisble={this.state.addNewRoomVisible}
+                    />
+                    {home.rooms.map((room, key) => {
+                      return (
+                        <Room
+                          key={key}
+                          id={room.id}
+                          name={room.name}
+                          status={room.status}
+                          appliances={room.appliances}
+                        />
+                      );
+                    })}
+                  </Fragment>
                 );
               })}
               <AddNewRoom
