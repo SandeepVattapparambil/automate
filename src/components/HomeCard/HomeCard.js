@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import "./style.css";
 
 class HomeCard extends Component {
+  _handleDeleteHome = () => {
+    this.props.deletHome(this.props.id);
+  };
+
   render() {
     return (
-      <div className="card horizontal">
+      <div id={this.props.id} className="card horizontal">
         <div className="card-image">
           <img
             src="https://img.icons8.com/dusk/128/000000/dog-house--v1.png"
@@ -18,21 +22,26 @@ class HomeCard extends Component {
               <span className={`status ${this.props.status}`}>
                 {this.props.status}
               </span>
-              <i className="material-icons right">close</i>
+              <i
+                className="material-icons right"
+                onClick={this._handleDeleteHome}
+              >
+                close
+              </i>
             </span>
             <div className="chip teal lighten-5">
               <img
                 src="https://img.icons8.com/dusk/64/000000/settings.png"
                 alt="Contact Person"
               />
-              {this.props.appliances.length} Appliances
+              {this.props.appliances ? this.props.appliances.length : 0} Appliances
             </div>
             <div className="chip teal lighten-5">
               <img
                 src="https://img.icons8.com/dusk/64/000000/door-opened.png.png"
                 alt="Contact Person"
               />
-              {this.props.rooms.length} Rooms
+              {this.props.rooms ? this.props.rooms.length: 0} Rooms
             </div>
           </div>
         </div>

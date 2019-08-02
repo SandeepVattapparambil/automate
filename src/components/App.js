@@ -32,6 +32,7 @@ class App extends Component {
 
   _handleAddNewHome = () => {
     let newHome = {
+      id: this._generateUniqueId(),
       name: this.state.newHomeName,
       appliances: [],
       rooms: [],
@@ -39,6 +40,24 @@ class App extends Component {
     };
     this.setState({
       homes: [...this.state.homes, newHome]
+    });
+  };
+
+  _generateUniqueId = () => {
+    return Date.now();
+  };
+
+  _deleteHome = homeId => {
+    let homeDataClone = Object.assign([], this.state.homes);
+    let indexToRemove;
+    for (let i = 0; i < homeDataClone.length; i++) {
+      if (homeDataClone[i].id === homeId) {
+        indexToRemove = homeDataClone.indexOf(homeDataClone[i]);
+      }
+    }
+    homeDataClone.splice(indexToRemove, 1);
+    this.setState({
+      homes: homeDataClone
     });
   };
 
@@ -66,10 +85,12 @@ class App extends Component {
                 return (
                   <HomeCard
                     key={key}
+                    id={home.id}
                     name={home.name}
                     status={home.status}
                     appliances={home.appliances}
                     rooms={home.rooms}
+                    deletHome={this._deleteHome}
                   />
                 );
               })}
