@@ -16,7 +16,7 @@ class WelcomeCard extends Component {
         </div>
         <button
           className={`waves-effect waves-light btn ${
-            !this.props.addButtonVisisble ? "" : "hide"
+            this.props.addButtonVisisble ? "" : "hide"
           }`}
           onClick={this._handleAddNewHome}
         >

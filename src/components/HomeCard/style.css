@@ -1,3 +1,7 @@
 .card.horizontal > .card-image {
     background: antiquewhite;
 }
+
+.chip.add-rooms{
+    cursor: pointer;
+}

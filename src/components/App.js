@@ -8,13 +8,18 @@ import WelcomeCard from "./WelcomeCard/WelcomeCard";
 import MainContentGrid from "./MainContentGrid/MainContentGrid";
 import AddNewHome from "./AddNewHome/AddNewHome";
 import HomeCard from "./HomeCard/HomeCard";
+import AddNewRoom from "./AddNewRoom/AddNewRoom";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       addNewHomeVisible: false,
+      addNewRoomVisible: false,
+      showAddNewhome: true,
+      closeNewHome: true,
       newHomeName: "",
+      newRoomName: "",
       homes: []
     };
   }
@@ -22,6 +27,7 @@ class App extends Component {
   _addNewHome = () => {
     this.setState({
       addNewHomeVisible: !this.state.addNewHomeVisible,
+      showAddNewhome: false,
       newHomeName: ""
     });
   };
@@ -34,7 +40,6 @@ class App extends Component {
     let newHome = {
       id: this._generateUniqueId(),
       name: this.state.newHomeName,
-      appliances: [],
       rooms: [],
       status: "active"
     };
@@ -57,7 +62,40 @@ class App extends Component {
     }
     homeDataClone.splice(indexToRemove, 1);
     this.setState({
-      homes: homeDataClone
+      homes: homeDataClone,
+      showAddNewhome: true
+    });
+  };
+
+  _addRooms = () => {
+    this.setState({
+      addNewRoomVisible: !this.state.addNewRoomVisible
+    });
+  };
+
+  _setNewRoomName = newRoomName => {
+    this.setState({
+      newRoomName
+    });
+  };
+
+  _handleAddNewRoom = () => {
+    let newRoom = {
+      id: this._generateUniqueId(),
+      name: this.state.newRoomName,
+      appliances: [],
+      status: "active"
+    };
+    let home = this.state.homes;
+    home[0].rooms.push(newRoom);
+    this.setState({
+      home
+    });
+  };
+
+  _closeAddNewRoom = () => {
+    this.setState({
+      addNewRoomVisible: false
     });
   };
 
@@ -69,7 +107,7 @@ class App extends Component {
           <Row>
             <WelcomeCard
               addNewHome={this._addNewHome}
-              addButtonVisisble={this.state.addNewHomeVisible}
+              addButtonVisisble={this.state.showAddNewhome}
             />
             <MainContentGrid>
               <AddNewHome
@@ -91,9 +129,20 @@ class App extends Component {
                     appliances={home.appliances}
                     rooms={home.rooms}
                     deletHome={this._deleteHome}
+                    addRooms={this._addRooms}
+                    addRoomVisisble={this.state.addNewRoomVisible}
                   />
                 );
               })}
+              <AddNewRoom
+                visible={this.state.addNewRoomVisible}
+                getRoomName={this._setNewRoomName}
+                addButtonVisible={
+                  this.state.newRoomName && this.state.newRoomName.length > 0
+                }
+                handleAddNewRoom={this._handleAddNewRoom}
+                closeAddNewRoom={this._closeAddNewRoom}
+              />
             </MainContentGrid>
           </Row>
         </Container>
