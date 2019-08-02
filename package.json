@@ -1,6 +1,6 @@
 {
   "name": "automate",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
@@ -127,5 +127,22 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SandeepVattapparambil/automate.git"
+  },
+  "keywords": [
+    "Home",
+    "automation"
+  ],
+  "author": "Sandeep Vattapparambil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SandeepVattapparambil/automate/issues"
+  },
+  "homepage": "https://github.com/SandeepVattapparambil/automate#readme"
 }
