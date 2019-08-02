@@ -13,7 +13,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addNewHomeVisible: false
+      addNewHomeVisible: false,
+      newHomeName: "",
+      homes: [{ name: "", appliances: [], rooms: [], status: "inactive" }]
     };
   }
 
@@ -22,6 +24,12 @@ class App extends Component {
       addNewHomeVisible: !this.state.addNewHomeVisible
     });
   };
+
+  _handleNewHomeInput = newHomeName => {
+    this.setState({ newHomeName });
+  };
+
+  _handleAddNewHome = () => {};
 
   render() {
     return (
@@ -37,8 +45,12 @@ class App extends Component {
               <AddNewHome
                 visible={this.state.addNewHomeVisible}
                 addNewHome={this._addNewHome}
+                getInputValue={this._handleNewHomeInput}
+                handleAddNewHome={this._handleAddNewHome}
               />
-              <HomeCard />
+              {this.state.homes.map((home, key) => {
+                return <HomeCard key={key} name={home.name} status={home.status}/>;
+              })}
             </MainContentGrid>
           </Row>
         </Container>
