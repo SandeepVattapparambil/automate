@@ -11,6 +11,9 @@ class AddNewHome extends Component {
 
   _addNewHome = () => {
     this.props.handleAddNewHome();
+    let input = document.querySelector("#name");
+    input.value = "";
+    this._handleAddNewHome();
   };
 
   render() {
@@ -37,7 +40,9 @@ class AddNewHome extends Component {
               <label htmlFor="name">Name</label>
             </div>
             <button
-              className="waves-effect waves-light btn right"
+              className={`waves-effect waves-light btn right ${
+                this.props.addButtonVisible ? "" : "disabled"
+              }`}
               onClick={this._addNewHome}
             >
               <i className="material-icons left">add</i>Add Home

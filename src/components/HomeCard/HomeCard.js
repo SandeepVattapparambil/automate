@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style.css";
 
 class HomeCard extends Component {
   render() {
@@ -13,23 +14,25 @@ class HomeCard extends Component {
         <div className="card-stacked">
           <div className="card-content">
             <span className="card-title activator grey-text text-darken-4">
-              Home Name <span className="status active">Active</span>
+              {this.props.name}&nbsp;
+              <span className={`status ${this.props.status}`}>
+                {this.props.status}
+              </span>
               <i className="material-icons right">close</i>
             </span>
-
             <div className="chip teal lighten-5">
               <img
                 src="https://img.icons8.com/dusk/64/000000/settings.png"
                 alt="Contact Person"
               />
-              3 Appliances
+              {this.props.appliances.length} Appliances
             </div>
             <div className="chip teal lighten-5">
               <img
                 src="https://img.icons8.com/dusk/64/000000/door-opened.png.png"
                 alt="Contact Person"
               />
-              4 Rooms
+              {this.props.rooms.length} Rooms
             </div>
           </div>
         </div>
