@@ -1,6 +1,13 @@
+/**
+ * App.js
+ * The main app starting point
+ */
 import React, { Component, Fragment } from "react";
 import "./App.css";
 
+/**
+ * Import all the required components here
+ */
 import Navbar from "./Navbar/Navbar";
 import Container from "./Container/Container";
 import Row from "./Row/Row";
@@ -11,8 +18,16 @@ import HomeCard from "./HomeCard/HomeCard";
 import AddNewRoom from "./AddNewRoom/AddNewRoom";
 import Room from "./Room/Room";
 
+/**
+ * Appliances data
+ */
 import Appliances from "../lib/appliances.json";
 
+/**
+ * @class App
+ * The main App class extended from Component class of react
+ * @param {Object} props - The input data to the component
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -76,12 +91,21 @@ class App extends Component {
     });
   };
 
+  /**
+   * @function _setNewRoomName
+   * A helper method to set the new rooms name temporarily in the state
+   * @param {String} newRoomName - The new rooms name
+   */
   _setNewRoomName = newRoomName => {
     this.setState({
       newRoomName
     });
   };
 
+  /**
+   * @function _handleAddNewRoom
+   * A helper method to handle the addition of a new room to the home
+   */
   _handleAddNewRoom = () => {
     let newRoom = {
       id: this._generateUniqueId(),
@@ -97,12 +121,22 @@ class App extends Component {
     });
   };
 
+  /**
+   * @function _closeAddNewRoom
+   * A helper method to close the add new room window
+   */
   _closeAddNewRoom = () => {
     this.setState({
       addNewRoomVisible: false
     });
   };
 
+  /**
+   * @function _addAppliances
+   * A helper method to app apliances to a room
+   * @param {Number} applianceId - The unique id of the appliance
+   * @param {Number} roomId - The unique id of the room
+   */
   _addAppliances = (applianceId, roomId) => {
     let roomDataClone = this.state.homes[0].rooms;
     for (let i = 0; i < roomDataClone.length; i++) {
@@ -117,6 +151,11 @@ class App extends Component {
     });
   };
 
+  /**
+   * @function _getApplianceInfo
+   * A helper method to get appliance data from appliances dataset
+   * @param {Number} applianceId - The unique id of the appliance
+   */
   _getApplianceInfo = applianceId => {
     for (let i = 0; i < Appliances.appliances.length; i++) {
       if (Appliances.appliances[i].id === parseInt(applianceId)) {
@@ -125,6 +164,11 @@ class App extends Component {
     }
   };
 
+  /**
+   * @function _removeRoom
+   * A helper method to remove a room from the house
+   * @param {Number} roomId - The unique id of the room
+   */
   _removeRoom = roomId => {
     let roomDataClone = this.state.homes[0].rooms;
     let roomIndex;
