@@ -11,6 +11,8 @@ import HomeCard from "./HomeCard/HomeCard";
 import AddNewRoom from "./AddNewRoom/AddNewRoom";
 import Room from "./Room/Room";
 
+import Appliances from "../lib/appliances.json";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -105,7 +107,7 @@ class App extends Component {
     let roomDataClone = this.state.homes[0].rooms;
     for (let i = 0; i < roomDataClone.length; i++) {
       if (roomDataClone[i].id === roomId) {
-        roomDataClone[i].appliances.push(applianceId);
+        roomDataClone[i].appliances.push(this._getApplianceInfo(applianceId));
       }
     }
     let homes = this.state.homes;
@@ -113,6 +115,14 @@ class App extends Component {
     this.setState({
       home: homes
     });
+  };
+
+  _getApplianceInfo = applianceId => {
+    for (let i = 0; i < Appliances.appliances.length; i++) {
+      if (Appliances.appliances[i].id === parseInt(applianceId)) {
+        return Appliances.appliances[i];
+      }
+    }
   };
 
   render() {

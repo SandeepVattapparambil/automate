@@ -54,7 +54,8 @@ class Room extends Component {
               src="https://img.icons8.com/dusk/64/000000/settings-3.png"
               alt="devices"
             />
-            {this.props.appliances ? this.props.appliances.length : 0} Appliances
+            {this.props.appliances ? this.props.appliances.length : 0}{" "}
+            Appliances
           </div>
           <div
             className={`chip teal lighten-5 add-rooms ${
@@ -116,6 +117,33 @@ class Room extends Component {
                 <i className="material-icons">add</i>
               </button>
             </div>
+          </Row>
+          <Row>
+            <ul
+              className={`collection ${
+                this.props.appliances.length > 0 ? "" : "hide"
+              }`}
+            >
+              {this.props.appliances.map((appliance, key) => {
+                return (
+                  <li
+                    key={key}
+                    id={appliance}
+                    className="collection-item avatar"
+                  >
+                    <img src="images/yuna.jpg" alt="" className="circle" />
+                    <span className="title">Title</span>
+                    <p>
+                      First Line <br />
+                      Second Line
+                    </p>
+                    <a href="#!" className="secondary-content">
+                      <i className="material-icons">grade</i>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </Row>
         </div>
       </div>

@@ -1,0 +1,22 @@
+{
+    "appliances": [
+        {
+            "id": 1,
+            "name": "Lamp",
+            "img": "https://img.icons8.com/dusk/64/000000/lamp.png",
+            "type": "ON/OFF"
+        },
+        {
+            "id": 2,
+            "name": "AC",
+            "img": "https://img.icons8.com/dusk/64/000000/air-conditioner.png",
+            "type": "INC/DEC"
+        },
+        {
+            "id": 3,
+            "name": "Curtains",
+            "img": "https://img.icons8.com/officel/64/000000/blind-down.png",
+            "type": "ON/OFF"
+        }
+    ]
+}
