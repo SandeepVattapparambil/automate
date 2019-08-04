@@ -3,18 +3,21 @@
         {
             "id": 1,
             "name": "Lamp",
+            "desc":"Lamp with shade",
             "img": "https://img.icons8.com/dusk/64/000000/lamp.png",
             "type": "ON/OFF"
         },
         {
             "id": 2,
             "name": "AC",
+            "desc": "Air conditioning unit",
             "img": "https://img.icons8.com/dusk/64/000000/air-conditioner.png",
             "type": "INC/DEC"
         },
         {
             "id": 3,
             "name": "Curtains",
+            "desc": "Curatins to blind windows",
             "img": "https://img.icons8.com/officel/64/000000/blind-down.png",
             "type": "ON/OFF"
         }

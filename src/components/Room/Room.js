@@ -126,20 +126,20 @@ class Room extends Component {
             >
               {this.props.appliances.map((appliance, key) => {
                 return (
-                  <li
-                    key={key}
-                    id={appliance}
-                    className="collection-item avatar"
-                  >
-                    <img src="images/yuna.jpg" alt="" className="circle" />
-                    <span className="title">Title</span>
-                    <p>
-                      First Line <br />
-                      Second Line
-                    </p>
-                    <a href="#!" className="secondary-content">
-                      <i className="material-icons">grade</i>
-                    </a>
+                  <li key={key} className="collection-item avatar">
+                    <img src={appliance.img} alt="" className="circle" />
+                    <span className="title"> {appliance.name}</span>
+                    <p>{appliance.desc}</p>
+                    <div className="secondary-content">
+                      <div className="switch right">
+                        <label>
+                          Off
+                          <input type="checkbox" />
+                          <span className="lever" />
+                          On
+                        </label>
+                      </div>
+                    </div>
                   </li>
                 );
               })}
