@@ -125,6 +125,22 @@ class App extends Component {
     }
   };
 
+  _removeRoom = roomId => {
+    let roomDataClone = this.state.homes[0].rooms;
+    let roomIndex;
+    for (let i = 0; i < roomDataClone.length; i++) {
+      if (roomDataClone[i].id === roomId) {
+        roomIndex = roomDataClone.indexOf(roomDataClone[i]);
+      }
+    }
+    roomDataClone.splice(roomIndex, 1);
+    let homes = this.state.homes;
+    homes[0].rooms = [...roomDataClone];
+    this.setState({
+      home: homes
+    });
+  };
+
   render() {
     return (
       <div>
@@ -168,6 +184,7 @@ class App extends Component {
                           status={room.status}
                           appliances={room.appliances}
                           handleAddAppliances={this._addAppliances}
+                          handleRoomDelete={this._removeRoom}
                         />
                       );
                     })}

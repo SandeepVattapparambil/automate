@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
+
+import "./style.css";
 
 import Row from "../Row/Row";
 
@@ -9,7 +12,15 @@ class Room extends Component {
     this.instance = "";
     this.state = {
       addApplianceVisible: false,
-      selectedAppliance: ""
+      selectedAppliance: "",
+      temperature: ""
+    };
+    this.fakeServerUrl = "https://app.fakejson.com/q";
+    this.payloadForServer = {
+      token: "uuBxOWJt-yA9sOgjWj5ASA",
+      data: {
+        temperature: 30
+      }
     };
   }
 
@@ -17,6 +28,18 @@ class Room extends Component {
     this.dropDownElement = document.querySelectorAll("select");
     window.M.FormSelect.init(this.dropDownElement);
   }
+
+  _getTemperature = () => {
+    axios({
+      method: "post",
+      url: this.fakeServerUrl,
+      data: this.payloadForServer
+    }).then(resp => {
+      this.setState({
+        temperature: resp.data.temperature
+      });
+    });
+  };
 
   _addAppliance = () => {
     this.setState({
@@ -37,6 +60,36 @@ class Room extends Component {
     });
   };
 
+  _handleApplianceState = (room, device, event) => {
+    if (device === "AC" && event.currentTarget.checked) {
+      window.M.toast({
+        html: "Fetching room temperature"
+      });
+      this._getTemperature();
+    }
+    if (!event.currentTarget.checked) {
+      this.setState({
+        temperature: ""
+      });
+    }
+    window.M.toast({
+      html: `${room}: ${device} is ${
+        event.currentTarget.checked ? "ON" : "OFF"
+      }`
+    });
+  };
+
+  _removeRoom = () => {
+    this.props.handleRoomDelete(this.props.id);
+  };
+
+  _changeTemp = type => {
+    let temperatureClone = parseInt(this.state.temperature);
+    this.setState({
+      temperature: type === "+" ? temperatureClone + 1 : temperatureClone - 1
+    });
+  };
+
   render() {
     return (
       <div id={this.props.id} className="card ">
@@ -47,15 +100,17 @@ class Room extends Component {
               {this.props.status}
             </span>
             <i className="material-icons left">home</i>
-            <i className="material-icons right">close</i>
+            <i className="material-icons right" onClick={this._removeRoom}>
+              close
+            </i>
           </span>
           <div className="chip teal lighten-5">
             <img
               src="https://img.icons8.com/dusk/64/000000/settings-3.png"
               alt="devices"
             />
-            {this.props.appliances ? this.props.appliances.length : 0}{" "}
-            Appliances
+            {this.props.appliances ? this.props.appliances.length : 0}
+            &nbsp; Appliances
           </div>
           <div
             className={`chip teal lighten-5 add-rooms ${
@@ -130,11 +185,45 @@ class Room extends Component {
                     <img src={appliance.img} alt="" className="circle" />
                     <span className="title"> {appliance.name}</span>
                     <p>{appliance.desc}</p>
+
+                    {this.state.temperature !== "" ? (
+                      <div
+                        className={appliance.type === "INC/DEC" ? "" : "hide"}
+                      >
+                        <span className="temperature">
+                          {this.state.temperature} °C
+                        </span>
+                        <button
+                          className="waves-effect waves-light btn control-btn  green lighten-5 green-text"
+                          onClick={e => this._changeTemp("+")}
+                        >
+                          <i className="material-icons">add</i>
+                        </button>
+                        <button
+                          className="waves-effect waves-light btn control-btn red lighten-5 red-text"
+                          onClick={e => this._changeTemp("-")}
+                        >
+                          <i className="material-icons">remove</i>
+                        </button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
                     <div className="secondary-content">
                       <div className="switch right">
                         <label>
                           Off
-                          <input type="checkbox" />
+                          <input
+                            type="checkbox"
+                            onChange={e =>
+                              this._handleApplianceState(
+                                this.props.name,
+                                appliance.name,
+                                e
+                              )
+                            }
+                          />
                           <span className="lever" />
                           On
                         </label>
