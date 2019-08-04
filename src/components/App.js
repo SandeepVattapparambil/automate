@@ -90,7 +90,7 @@ class App extends Component {
     let home = this.state.homes;
     home[0].rooms.push(newRoom);
     this.setState({
-      home,
+      homes: home,
       newRoomName: ""
     });
   };
@@ -98,6 +98,20 @@ class App extends Component {
   _closeAddNewRoom = () => {
     this.setState({
       addNewRoomVisible: false
+    });
+  };
+
+  _addAppliances = (applianceId, roomId) => {
+    let roomDataClone = this.state.homes[0].rooms;
+    for (let i = 0; i < roomDataClone.length; i++) {
+      if (roomDataClone[i].id === roomId) {
+        roomDataClone[i].appliances.push(applianceId);
+      }
+    }
+    let homes = this.state.homes;
+    homes[0].rooms = [...roomDataClone];
+    this.setState({
+      home: homes
     });
   };
 
@@ -143,6 +157,7 @@ class App extends Component {
                           name={room.name}
                           status={room.status}
                           appliances={room.appliances}
+                          handleAddAppliances={this._addAppliances}
                         />
                       );
                     })}
