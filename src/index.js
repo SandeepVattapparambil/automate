@@ -1,6 +1,6 @@
 /**
  * index.js
- * The main javascript file to be attached to html fo rrendering.
+ * The main javascript file to be attached to html fo rendering.
  * This file includes the react app source appended to the dom using the ReactDOM.render() method
  */
 import React from 'react';
