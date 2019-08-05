@@ -209,7 +209,6 @@ class Room extends Component {
                     ) : (
                       ""
                     )}
-
                     <div className="secondary-content">
                       <div className="switch right">
                         <label>
