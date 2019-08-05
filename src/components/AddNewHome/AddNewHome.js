@@ -1,14 +1,37 @@
+/**
+ * AddNewHome.js
+ * Component for adding a new home
+ */
 import React, { Component } from "react";
 
+/**
+ * @class AddNewHome
+ * A component to add a new home to the collection of homes.
+ * This is a stateless component
+ * @param {Object} props - The input data to the component
+ */
 class AddNewHome extends Component {
+  /**
+   * @function _handleAddNewHome
+   * A helper to add a new home by calling the parent components method through render props
+   */
   _handleAddNewHome = () => {
     this.props.addNewHome();
   };
 
+  /**
+   * @function _handleInputChange
+   * A helper to pass the home name back to parent component
+   * @param {String} e - The event object containing the event data
+   */
   _handleInputChange = e => {
     this.props.getInputValue(e.currentTarget.value);
   };
 
+  /**
+   * @function _addNewHome
+   * A helper to add a new home by using parent components methods through render props
+   */
   _addNewHome = () => {
     this.props.handleAddNewHome();
     let input = document.querySelector("#name");

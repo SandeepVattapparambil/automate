@@ -1,10 +1,29 @@
+/**
+ * AddNewRoom.js
+ * Component for adding a new room
+ */
 import React, { Component } from "react";
 
+/**
+ * @class AddNewRoom
+ * A component to add a new room to the collection of rooms in a home.
+ * This is a stateless component
+ * @param {Object} props - The input data to the component
+ */
 class AddNewRoom extends Component {
+  /**
+   * @function _handleInputChange
+   * A helper to pass the room name back to parent component
+   * @param {String} e - The event object containing the event data
+   */
   _handleInputChange = e => {
     this.props.getRoomName(e.currentTarget.value);
   };
 
+  /**
+   * @function _addNewRoom
+   * A helper to add a new room by using parent components methods through render props
+   */
   _addNewRoom = () => {
     let input = document.querySelector("#roomName");
     input.value = "";
@@ -12,6 +31,10 @@ class AddNewRoom extends Component {
     this._handleAddNewRoom();
   };
 
+  /**
+   * @function _handleAddNewRoom
+   * A helper to add a new room by calling the parent components method through render props
+   */
   _handleAddNewRoom = () => {
     this.props.closeAddNewRoom();
   };

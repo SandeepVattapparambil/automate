@@ -42,6 +42,10 @@ class App extends Component {
     };
   }
 
+  /**
+   * @function _addNewHome
+   * A helper method to control the visibility of add new home card
+   */
   _addNewHome = () => {
     this.setState({
       addNewHomeVisible: !this.state.addNewHomeVisible,
@@ -50,10 +54,19 @@ class App extends Component {
     });
   };
 
+  /**
+   * @function _handleNewHomeInput
+   * A helper method to set the name of the new home temperoraily before adding to the app state
+   * @param {String} newHomeName  - The name of the new home
+   */
   _handleNewHomeInput = newHomeName => {
     this.setState({ newHomeName });
   };
 
+  /**
+   * @function _handleAddNewHome
+   * A helper method to create a new home and to the collection of homes in the app state
+   */
   _handleAddNewHome = () => {
     let newHome = {
       id: this._generateUniqueId(),
@@ -66,10 +79,19 @@ class App extends Component {
     });
   };
 
+  /**
+   * @function _generateUniqueId
+   * A helper method to generate e unique id using timestamp
+   */
   _generateUniqueId = () => {
     return Date.now();
   };
 
+  /**
+   * @function _deleteHome
+   * A heper method to delete a home from the collection of rooms using a unique id
+   * @param {Number} homeId - The unique id of the home
+   */
   _deleteHome = homeId => {
     let homeDataClone = Object.assign([], this.state.homes);
     let indexToRemove;
@@ -85,6 +107,10 @@ class App extends Component {
     });
   };
 
+  /**
+   * @function _addRooms
+   * A helper method to handle add room card visibility
+   */
   _addRooms = () => {
     this.setState({
       addNewRoomVisible: !this.state.addNewRoomVisible
@@ -188,7 +214,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar title={"Automate"} />
         <Container>
           <Row>
             <WelcomeCard

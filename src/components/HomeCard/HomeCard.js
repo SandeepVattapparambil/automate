@@ -1,11 +1,30 @@
+/**
+ * HomeCard.js
+ * Component for rendering the home data
+ */
 import React, { Component } from "react";
 import "./style.css";
 
+/**
+ * @class HomeCard
+ * A component to render and add new homes to the app
+ * This is a stateless component
+ * @param {Object} props - The input data to the component
+ */
 class HomeCard extends Component {
+  /**
+   * @function _handleDeleteHome
+   * A helper to delete a home from app's state
+   */
   _handleDeleteHome = () => {
     this.props.deletHome(this.props.id);
   };
 
+  /**
+   * @function _handleAddRooms
+   * A helper to add new rooms to the home by taking data from 
+   * the child and passing to the parent component
+   */
   _handleAddRooms = () => {
     this.props.addRooms();
   };
@@ -34,15 +53,6 @@ class HomeCard extends Component {
                   close
                 </i>
               </span>
-              {/* <div className="chip teal lighten-5">
-                <img
-                  src="https://img.icons8.com/dusk/64/000000/settings.png"
-                  alt="Contact Person"
-                />
-                {this.props.appliances ? this.props.appliances.length : 0}{" "}
-                Appliances
-              </div> */}
-
               <div className="chip teal lighten-5">
                 <img
                   src="https://img.icons8.com/dusk/64/000000/door-opened.png.png"
