@@ -1,6 +1,6 @@
 # Automate
 ### A simple home automation simulation app.
-
+Fork a copy of the repo and continue
 ## Available Scripts
 
 In the project directory, you can run:
