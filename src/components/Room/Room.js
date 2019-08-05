@@ -1,10 +1,30 @@
+/**
+ * Room.js
+ * A card cmponent created using materializecss card class
+ * This component holds all the room data and adds new room to the home
+ */
 import React, { Component } from "react";
-import axios from "axios";
 
+/**
+ * Axios - is an A+ promise based ajax wrapper library
+ */
+import axios from "axios";
 import "./style.css";
 
-import Row from "../Row/Row";
+/**
+ * Appliances data
+ */
+import Appliances from "../../lib/appliances.json";
 
+import Row from "../Row/Row";
+import Loader from "../Loader/Loader";
+
+/**
+ * @class Room
+ * A component to render all the rooms of a home as well as to add new homes
+ * This is a statefull component
+ * @param {Object} props - The input data to the component
+ */
 class Room extends Component {
   constructor() {
     super();
@@ -13,7 +33,8 @@ class Room extends Component {
     this.state = {
       addApplianceVisible: false,
       selectedAppliance: "",
-      temperature: ""
+      temperature: "",
+      fetchingTemp: false
     };
     this.fakeServerUrl = "https://app.fakejson.com/q";
     this.payloadForServer = {
@@ -24,11 +45,24 @@ class Room extends Component {
     };
   }
 
+  /**
+   * @function componentDidMount
+   * @inner
+   * @memberof React.Component
+   * This is a lifecycle method available from React, this method is called
+   * when ever the component is mounted on to the DOM for the first render
+   * Here this method is used to initialize the Materialize dropdown component
+   */
   componentDidMount() {
     this.dropDownElement = document.querySelectorAll("select");
     window.M.FormSelect.init(this.dropDownElement);
   }
 
+  /**
+   * @function _getTemperature
+   * A helper method to fetch temerature from the fake server using axios,
+   * and to set the data to the state of the component
+   */
   _getTemperature = () => {
     axios({
       method: "post",
@@ -36,23 +70,37 @@ class Room extends Component {
       data: this.payloadForServer
     }).then(resp => {
       this.setState({
-        temperature: resp.data.temperature
+        temperature: resp.data.temperature,
+        fetchingTemp: false
       });
     });
   };
 
+  /**
+   * @function _addAppliance
+   * A helper method to toggle adding new appliance card visibility
+   */
   _addAppliance = () => {
     this.setState({
       addApplianceVisible: !this.state.addApplianceVisible
     });
   };
 
+  /**
+   * @function _handleApplianceSelect
+   * A helper method to set the selected appliance id to the state
+   */
   _handleApplianceSelect = e => {
     this.setState({
       selectedAppliance: e.currentTarget.value
     });
   };
 
+  /**
+   * @function _addApplianceToRoom
+   * A helper method to toggle add appliance to the room card visibility, and
+   * also to pass appliance data back to the parent
+   */
   _addApplianceToRoom = () => {
     this.props.handleAddAppliances(this.state.selectedAppliance, this.props.id);
     this.setState({
@@ -60,14 +108,28 @@ class Room extends Component {
     });
   };
 
+  /**
+   * @function _handleApplianceState
+   * A helper method to handle the state of an applaince like ON or OFF
+   * @param {Number} room - The unique id of the room
+   * @param {Number} device - The unique id of the device
+   * @param {Object} event - The event object
+   */
   _handleApplianceState = (room, device, event) => {
     if (device === "AC" && event.currentTarget.checked) {
       window.M.toast({
         html: "Fetching room temperature"
       });
-      this._getTemperature();
+      this.setState(
+        {
+          fetchingTemp: true
+        },
+        () => {
+          this._getTemperature();
+        }
+      );
     }
-    if (!event.currentTarget.checked) {
+    if (!event.currentTarget.checked && device === "AC") {
       this.setState({
         temperature: ""
       });
@@ -79,10 +141,19 @@ class Room extends Component {
     });
   };
 
+  /**
+   * @function _removeRoom
+   * A helper method to remove a room by passing the romm id
+   * back to the parent and calling parent's method
+   */
   _removeRoom = () => {
     this.props.handleRoomDelete(this.props.id);
   };
 
+  /**
+   * @function _changeTemp
+   * A helper method to change the room temperature
+   */
   _changeTemp = type => {
     let temperatureClone = parseInt(this.state.temperature);
     this.setState({
@@ -100,7 +171,10 @@ class Room extends Component {
               {this.props.status}
             </span>
             <i className="material-icons left">home</i>
-            <i className="material-icons right" onClick={this._removeRoom}>
+            <i
+              className="material-icons right pointer"
+              onClick={this._removeRoom}
+            >
               close
             </i>
           </span>
@@ -137,24 +211,17 @@ class Room extends Component {
                 <option value="" disabled defaultValue selected>
                   Select an appliance
                 </option>
-                <option
-                  value="1"
-                  data-icon="https://img.icons8.com/dusk/64/000000/lamp.png"
-                >
-                  Lamp
-                </option>
-                <option
-                  value="2"
-                  data-icon="https://img.icons8.com/dusk/64/000000/air-conditioner.png"
-                >
-                  AC
-                </option>
-                <option
-                  value="3"
-                  data-icon="https://img.icons8.com/officel/64/000000/blind-down.png"
-                >
-                  Curtains
-                </option>
+                {Appliances.appliances.map((appliance, key) => {
+                  return (
+                    <option
+                      key={key}
+                      value={appliance.id}
+                      data-icon={appliance.img}
+                    >
+                      {appliance.name}
+                    </option>
+                  );
+                })}
               </select>
               <label>Appliances</label>
             </div>
@@ -185,7 +252,9 @@ class Room extends Component {
                     <img src={appliance.img} alt="" className="circle" />
                     <span className="title"> {appliance.name}</span>
                     <p>{appliance.desc}</p>
-
+                    {this.state.fetchingTemp && appliance.type === "INC/DEC" ? (
+                      <Loader />
+                    ) : null}
                     {this.state.temperature !== "" ? (
                       <div
                         className={appliance.type === "INC/DEC" ? "" : "hide"}
@@ -194,7 +263,7 @@ class Room extends Component {
                           {this.state.temperature} °C
                         </span>
                         <button
-                          className="waves-effect waves-light btn control-btn  green lighten-5 green-text"
+                          className="waves-effect waves-light btn control-btn green lighten-5 green-text"
                           onClick={e => this._changeTemp("+")}
                         >
                           <i className="material-icons">add</i>

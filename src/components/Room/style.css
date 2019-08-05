@@ -7,3 +7,7 @@
     font-weight: 600;
     margin-right: 20px;
 }
+
+i.pointer{
+    cursor: pointer;
+}
