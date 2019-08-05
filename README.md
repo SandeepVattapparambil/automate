@@ -1,9 +1,14 @@
 # Automate
 ### A simple home automation simulation app.
 Fork a copy of the repo and continue
+
+## Live Demo: [click here](https://automate-ap.herokuapp.com/)
+
 ## Available Scripts
 
 In the project directory, you can run:
+### `npm i`
+Installs all the dependencies for the project.
 
 ### `npm start`
 

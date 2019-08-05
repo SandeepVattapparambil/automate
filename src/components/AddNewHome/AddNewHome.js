@@ -41,7 +41,7 @@ class AddNewHome extends Component {
 
   render() {
     return (
-      <div className={`card ${!this.props.visible ? "hide" : ""}`}>
+      <div className={`card ${this.props.visible ? "" : "hide"}`}>
         <div className="card-content grey-text">
           <span className="card-title activator grey-text text-darken-4">
             <i className="material-icons left">home</i> Add home
